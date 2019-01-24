@@ -7,7 +7,7 @@
     //   referral_code
     // ) => {
     //   console.log(first_name, last_name, email, password, "akjasdkjas");
-    //   const url = "http://192.168.31.50:8000/api/user";
+    //   const url = "http://www.xclassets.com/api/customer";
     //   fetch(url, {
     //     method: "POST",
     //     headers: {
