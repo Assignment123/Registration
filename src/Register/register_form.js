@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Form, Segment } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import { NavLink } from "react-router-dom";
-import {callApi} from "./api";
+import Registration from "./api";
+
 const validate = (first_name, last_name, email) => {
   return {
     first_name: first_name === "",
