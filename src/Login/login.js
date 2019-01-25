@@ -27,7 +27,7 @@ class Login extends Component {
 
     LoginApi({ email: email, password: password }).then(res => {
       if (res.status == 401) {
-        alert("Not matched");
+        alert("Email and Password Not Matched");
       } else if (res.status == 200) {
         window.location.assign("/admin");
       }
