@@ -6,13 +6,13 @@ import MainRoute from "./Routes/main_route";
 class App extends Component {
   render() {
     return (
-        <div className="App">
-          <Router>
-            <div>
-              <MainRoute />
-            </div>
-          </Router>
-        </div>
+      <div className="App">
+        <Router>
+          <div>
+            <MainRoute />
+          </div>
+        </Router>
+      </div>
     );
   }
 }

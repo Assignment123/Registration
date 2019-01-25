@@ -1,16 +1,26 @@
 import React, { Component } from "react";
 import { Form, Segment } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
-import { NavLink } from "react-router-dom";
 import Registration from "./api";
 
-const validate = (first_name, last_name, email) => {
+const validate = (
+  first_name,
+  last_name,
+  email,
+  password,
+  confirm_password,
+  referral_code
+) => {
   return {
     first_name: first_name === "",
     last_name: last_name === "",
-    email: email === ""
+    email: email === "",
+    password: password === "" || password !== confirm_password,
+    confirm_password: confirm_password === "" || confirm_password !== password,
+    referral_code: referral_code === ""
   };
 };
+
 const PasswordValidate = password => {
   let regex = "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$";
   if (password === "" && !regex) {
@@ -50,30 +60,45 @@ class RegisterForm extends Component {
   };
 
   submitForm = data => {
-    return Registration(data).then(window.location.assign("/login"));
+    return Registration(data);
   };
   onSubmit = e => {
-    // console.log("sdhbfshdf");
-    if (!this.shouldSubmitted()) {
+    console.log(this.shouldSubmitted());
+
+    if (this.shouldSubmitted()) {
       e.preventDefault();
-      const { first_name, last_name, email, password } = this.submitForm(
-        this.state.data
-      );
+      const { first_name, last_name, email, password } = this.state;
+      let data = {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        password: password
+      };
+      this.submitForm(data);
     }
   };
   shouldSubmitted() {
     const errors = validate(
       this.state.first_name,
       this.state.last_name,
-      this.state.email
+      this.state.email,
+      this.state.password,
+      this.state.confirm_password,
+      this.state.referral_code
     );
     const isDisabled = Object.keys(errors).some(x => errors[x]);
-
     return !isDisabled;
   }
 
   render() {
-    const errors = validate(this.state.email, this.state.password);
+    const errors = validate(
+      this.state.first_name,
+      this.state.last_name,
+      this.state.email,
+      this.state.password,
+      this.state.confirm_password,
+      this.state.referral_code
+    );
     const isDisabled = Object.keys(errors).some(x => errors[x]);
 
     const MarkError = field => {
@@ -81,10 +106,12 @@ class RegisterForm extends Component {
       const shouldShow = this.state.touched[field];
       return hasError ? shouldShow : false;
     };
+
+    console.log("state", this.state);
     return (
       <Segment inverted>
         <h1>Register</h1>
-        <Form inverted onSubmit={this.onSubmit.bind(this)}>
+        <Form inverted onSubmit={this.onSubmit}>
           <Form.Group widths="equal">
             <Form.Input
               className={MarkError("first_name") ? "error" : ""}
@@ -158,12 +185,8 @@ class RegisterForm extends Component {
             />
           </Form.Group>
 
-          <Form.Button
-            disabled={isDisabled}
-            type="submit"
-            onClick={this.onSubmit}
-          >
-            <NavLink to="/login">Submit</NavLink>
+          <Form.Button disabled={isDisabled} type="submit">
+            Submit
           </Form.Button>
         </Form>
       </Segment>

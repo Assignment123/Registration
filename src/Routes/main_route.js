@@ -6,9 +6,9 @@ class MainRoute extends Component {
   render() {
     return (
       <Router>
-        <Switch>    
-            <Route exact path="/register" component={RegisterForm} />
-            <Route exact path="/login" component={Login} />
+        <Switch>
+          <Route exact path="/register" component={RegisterForm} />
+          <Route exact path="/login" component={Login} />
         </Switch>
       </Router>
     );

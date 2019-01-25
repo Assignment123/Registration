@@ -6,11 +6,11 @@ function submitLogin(login) {
       mode: "no-cors",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ email: login.email, password: login.password })
+    body: JSON.stringify({ username: login.email, password: login.password })
   })
     .then(res => res.json())
     .then(res => {
-      console.log("data is set in localstorage", res);
+      console.log(res);
       localStorage.setItem("token", res.token);
       return res;
     });
